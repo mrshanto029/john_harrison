@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AE Network - Agentic Commerce Stack</title>
+  <!-- <script src="https://kit.fontawesome.com/a2e0e6ad1b.js" crossorigin="anonymous"></script> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-purple: #8b5cf6;
+      --primary-pink: #ec4899;
+      --dark-bg: #0f0a1e;
+      --darker-bg: #1a0b2e;
+      --card-bg: rgba(30, 20, 50, 0.6);
+      --text-light: #e5e7eb;
+      --text-gray: #9ca3af;
+    }
+
+    body {
+      font-family: "Inter", ui-sans-serif, system-ui, -apple-system,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+               "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      background: rgba(16, 0, 26, 1);
+      color: var(--text-light);
+      overflow-x: hidden;
+      padding: 2rem;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-gradient {
+      position: absolute;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.3;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .bg-gradient-1 {
+      background: radial-gradient(circle, var(--primary-purple), transparent);
+      top: -200px;
+      left: -200px;
+    }
+
+    .bg-gradient-2 {
+      background: radial-gradient(circle, var(--primary-pink), transparent);
+      bottom: -300px;
+      right: -300px;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(30px, -50px) scale(1.1);
+      }
+      66% {
+        transform: translate(-20px, 20px) scale(0.9);
+      }
+    }
+     .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .section {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background: #1a0d2e;
+      /* dark purple background */
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      color: #a855f7;
+      /* purple icon */
+      margin-bottom: 10px;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      padding: 1rem 0;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      background: rgba(25, 18, 48, 0.9);
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-purple);
+    }
+
+    .logo a {
+      color: var(--primary-purple);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-purple);
+    }
+
+    .cta-btn {
+      background: linear-gradient(135deg, var(--primary-purple), var(--primary-pink));
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 50px;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      backdrop-filter: blur(10px);
+      background: rgba(139, 92, 246, 0.1);
+      animation: fadeInDown 1s ease;
+    }
+
+    /* .hero h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      animation: fadeInUp 1s ease 0.2s backwards;
+    } */
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-gray);
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      line-height: 1.6;
+      animation: fadeInUp 1s ease 0.4s backwards;
+    }
+
+    .hero-cta {
+      animation: fadeInUp 1s ease 0.6s backwards;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .motion-btn {
+      position: relative;
+      overflow: hidden;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: 600;
+      color: black;
+      background: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: color 0.4s ease;
+    }
+
+    .motion-btn::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-purple), var(--primary-pink));
+      transition: width 0.5s ease;
+      z-index: 0;
+    }
+
+    .motion-btn:hover::before {
+      width: 100%;
+    }
+
+    .motion-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .motion-btn:hover {
+      color: #fff;
+    }
+
+    /* Chat Interface */
+      .chat-section {
+      width: 100%;
+    }
+
+    .chat-container {
+      background: rgba(30, 20, 50, 0.8);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-left:5%;
+      width: 150vh;
+      height: 50vh;
+    }
+
+   .chat-input {
+      width: 100%;
+      background: rgba(20, 15, 35, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      color: #fff;
+      font-size: 16px;
+      resize: none;
+      min-height: 120px;
+      margin-bottom: 20px;
+      font-family: inherit;
+    }
+
+    .chat-input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: rgba(147, 112, 219, 0.5);
+    }
+
+    .chat-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .tool-btn {
+      background: rgba(40, 30, 60, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-btn:hover {
+      background: rgba(60, 45, 85, 0.9);
+      border-color: rgba(147, 112, 219, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .icon-btn {
+      padding: 12px 16px;
+    }
+
+    .tool-btn i {
+      font-size: 16px;
+    }
+
+    /* Desktop Layout - All buttons in one row */
+    @media (min-width: 769px) {
+      .chat-tools {
+        flex-wrap: nowrap;
+      }
+      
+      .tool-btn.right-side {
+        margin-left: auto;
+      }
+    }
+
+    /* Mobile/Tablet Layout - Responsive grid */
+    @media (max-width: 1024px) {
+      .chat-container {
+        margin-left: 0;
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+      }
+
+      .chat-input {
+        min-height: 100px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .chat-tools {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 10px;
+      }
+
+      /* Left side: 4 buttons in 2x2 grid */
+      .tool-btn:nth-child(1) { grid-column: 1; grid-row: 1; }
+      .tool-btn:nth-child(2) { grid-column: 2; grid-row: 1; }
+      .tool-btn:nth-child(3) { grid-column: 1; grid-row: 2; }
+      .tool-btn:nth-child(4) { grid-column: 2; grid-row: 2; }
+
+      /* Right side: 2 buttons stacked */
+      .tool-btn:nth-child(5) { grid-column: 3; grid-row: 1; }
+      .tool-btn:nth-child(6) { grid-column: 3; grid-row: 2; }
+
+      .tool-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Extra small screens */
+    @media (max-width: 480px) {
+      .chat-container {
+        padding: 15px;
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .chat-input {
+        padding: 15px;
+        min-height: 100px;
+        font-size: 14px;
+      }
+
+      .tool-btn {
+        padding: 10px 15px;
+        font-size: 13px;
+      }
+
+      .icon-btn {
+        padding: 10px 12px;
+      }
+
+      .tool-btn i {
+        font-size: 14px;
+      }
+    }
+    /* Section Styles */
+    .section {
+      max-width: 1400px;
+      margin: 8rem auto;
+      padding: min(2em,8%);
+      text-align: center;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-gray);
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      max-width: 700px;
+      margin: -2rem auto 4rem;
+    }
+
+    /* Feature Grid - Responsive */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+      justify-items: center;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      /* width: 100%; */
+      max-width: 300px;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--primary-purple);
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+    } 
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary-purple), var(--primary-pink));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      color: var(--text-gray);
+      line-height: 1.6;
+    }
+    /* #nft-access{
+      margin-left: 95%;
+    }
+     #api-key{
+      margin-left: 95%;
+    } */
+    /* Stack Grid */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stack-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .stack-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-purple);
+    }
+
+    /* Glass Card */
+    .glass {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+      border-radius: 28px;
+      /* width: 100%; */
+      max-width: 750px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .glass-card h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 600;
+      margin-bottom: 2.5rem;
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .feature {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .sub-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 2rem;
+      /* width: 90%; */
+      margin: 0 auto;
+      backdrop-filter: blur(15px);
+    }
+
+    .sub-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .sub-card p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Integration Section */
+    .section1 {
+      font-family: "Inter", sans-serif;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      text-align: center;
+      width: 100%;
+    }
+
+    .hero-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #fff, #bdb8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      margin-bottom: 2rem;
+      color: #d0cde5;
+    }
+    /* Logo Cards Grid - Fixed for all screen sizes */
+    .card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      margin: 3rem auto;
+      max-width: 1000px;
+    }
+
+    .logos-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 18px 30px;
+      border-radius: 18px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      min-width: 140px;
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      min-height: 100px;
+    }
+
+    .logos-grid:hover {
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .logo-img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 14px;
+    }
+
+
+    /* Code Block Section */
+    #code-bl-section {
+      border: 3px solid rgba(223, 220, 224, 0.089);
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      border-radius: 30px;
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: 4rem auto;
+    }
+
+    .code-block-section {
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: left;
+      margin: 0 auto 2.5rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+      width: 100%;
+      max-width: 900px;
+      min-height: 300px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: none;
+      position: relative;
+    }
+
+    .code-block-section::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: 0;
+      /* width: 100%; */
+      height: 10px;
+      background: #120b2544;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+    }
+
+    .code-header {
+      font-size: 0.875rem;
+      color: #aaa5c3;
+      margin-bottom: 0.75rem;
+    }
+
+    .code {
+      background: transparent;
+      color: #f8f8f2;
+      font-family: "Source Code Pro", monospace;
+      font-size: clamp(0.75rem, 1.5vw, 0.92rem);
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .buttons-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 0.75rem 1.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #801a86;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-purple), var(--primary-pink));
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: #e2dbee;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+    }
+
+    /* FAQ Section */
+    .faq-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: rgba(40, 20, 60, 0.5);
+      border: 1px solid rgba(80, 60, 120, 0.5);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .faq-item:hover {
+      background: rgba(50, 30, 80, 0.6);
+      border-color: rgba(100, 70, 150, 0.6);
+    }
+
+    .faq-question {
+      color: white;
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      line-height: 1.5;
+      background:  rgba(50, 30, 80, 0.6);
+    }
+  
+    .faq-answer p {
+  padding: 0 25px 18px;
+  color: #ddd;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+  color: #a98cff;
+  font-size: 1.1rem;
+}
+
+.faq-question.active .arrow {
+  transform: rotate(180deg);
+}
+
+    .faq-icon {
+      color: #8060c0;
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-left: 16px;
+    }
+
+    /* Newsletter Section */
+    .newsletter-card {
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      margin: 60px auto;
+      box-shadow: 0 20px 60px rgba(100, 40, 150, 0.3);
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .logo-circle {
+      margin: 0 auto 20px;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logos {
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      max-width: 60px;
+    }
+
+    .newsletter-card h2 {
+      font-size: clamp(1.5rem, 3vw, 1.75rem);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .newsletter-card p {
+      color: #c0c0d0;
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      margin-bottom: 30px;
+    }
+
+    .email-form {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .email-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 14px 20px;
+      background: rgba(20, 10, 40, 0.6);
+      border: 1px solid rgba(80, 60, 120, 0.5);
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .email-input::placeholder {
+      color: #808090;
+    }
+
+    .submit-sub {
+      position: relative; 
+      overflow: hidden; 
+      padding: 12px 24px;
+      font-size: 18px;
+      font-weight: 600;
+      color: black;  
+      background: white; 
+      border: none; 
+      border-radius: 25px;  
+      cursor: pointer; 
+      transition: color 0.4s ease;
+      z-index: 0;
+    }
+
+    .submit-sub::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0%;
+      height: 100%;
+      background: rgba(16, 0, 26, 1);
+      transition: width 0.5s ease;
+      z-index: -1;
+    } 
+
+    .submit-sub:hover::before {
+      width: 100%;
+    }
+
+    .submit-sub:hover {
+      color: #fff;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 80px auto 0;
+      padding: 0 2rem;
+    }
+
+    .footer-brand {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .footer-tagline {
+      color: #808090;
+      font-size: 16px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(40, 20, 60, 0.6);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .social-icon:hover {
+      background: rgba(60, 30, 90, 0.8);
+    }
+
+    .footer-links {
+      /* display: flex;
+      gap: 60px;
+      flex-wrap: wrap; */
+      flex: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .footer-column h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: #a0a0b0;
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(80, 60, 120, 0.3);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 14px;
+      color: #606070;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: inline-block;
+      }
+
+      header {
+        width: 100%;
+        padding: 0.75rem 0;
+      }
+
+      header.scrolled {
+        width: 100%;
+      }
+
+      nav {
+        padding: 0 1rem;
+      }
+      .cta-btn{
+        display: none;
+      }
+
+      .hero {
+        padding: 6rem 1rem 3rem;
+      }
+
+      .section {
+        margin: 4rem auto;
+        padding: 1rem;
+      }
+
+      .section1 {
+        padding: 2rem 1rem;
+      }
+
+      .container {
+        padding: 0;
+      }
+
+      .hero-title {
+        width: 100% !important;
+        margin-left: 0 !important;
+        white-space: normal;
+      }
+
+      .chat-container {
+        padding: 1.5rem;
+      }
+
+      .chat-input {
+        min-height: 150px;
+        padding: 1rem;
+      }
+
+      .chat-tools {
+        justify-content: center;
+      }
+
+      .tool-btn {
+        flex: 1 1 auto;
+        min-width: 120px;
+        justify-content: center;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .stack-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .glass-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .features {
+        gap: 1rem;
+      }
+
+      .sub-card {
+        width: 95%;
+        padding: 1.5rem;
+      }
+
+      .card {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 1rem;
+      }
+
+      .logos-grid {
+        min-width: 140px;
+        padding: 15px 20px;
+      }
+
+      #code-bl-section {
+        padding: 30px 15px;
+      }
+
+      .code-block-section {
+        padding: 1rem;
+      }
+
+      .buttons-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .newsletter-card {
+        padding: 40px 20px;
+        width: 95%;
+      }
+
+      .email-form {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .email-input {
+        width: 100%;
+      }
+
+      .submit-sub {
+        width: 100%;
+      }
+
+      .footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 0 1rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        width: 100%;
+      }
+
+      .footer-column {
+        text-align: center;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+        padding: 1rem;
+      }
+
+      .container {
+        align-items: center;
+      }
+    }
+
+    /* Small Mobile */
+    @media (max-width: 480px) {
+      body {
+        padding: 0.5rem;
+      }
+
+      .hero-badge {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .motion-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+
+      .cta-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+      }
+
+      .chat-input {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+
+      .tool-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+      }
+
+      .card {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0.5rem;
+      }
+
+      .logos-grid {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 15px 20px;
+      }
+
+      .code {
+        font-size: 0.75rem;
+      }
+
+      .glass-card {
+        padding: 1.5rem 1rem;
+      }
+
+      .newsletter-card {
+        padding: 30px 15px;
+      }
+
+      .faq-item {
+        padding: 15px;
+      }
+
+      .faq-question {
+        font-size: 0.875rem;
+      }
+
+      .footer-links {
+        width: 100%;
+        grid-template-columns: 1fr;
+        margin-top: 30px;
+      }
+
+      .footer {
+        padding: 1rem 0.5rem;
+      }
+
+      #code-bl-section {
+        padding: 20px 10px;
+      }
+
+      .code-block-section {
+        padding: 1rem 0.5rem;
+      }
+    }
+
+    /* Tablet and Medium Screens */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      body {
+        padding: 2rem;
+       
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .stack-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section {
+        padding: 2rem;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .footer-links {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Large Screens */
+    @media (min-width: 1025px) {
+      body {
+        padding: 2rem 4rem;
+        max-width: 1600px;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .card {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .section {
+        padding: 2rem;
+      }
+
+      header.scrolled {
+        max-width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background Animation -->
+  <div class="bg-animation">
+    <div class="bg-gradient bg-gradient-1"></div>
+    <div class="bg-gradient bg-gradient-2"></div>
+  </div>
+
+  <div class="stars" id="stars"></div>
+
+  <!-- Header -->
+  <header id="header">
+    <nav>
+      <div class="logo">
+        <i class="fas fa-atom"></i>
+        <a href="#home"><span><i>AE</i></span></a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#teams">Teams</a></li>
+      </ul>
+      <button class="cta-btn">Get Started</button>
+      <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+    </nav>
+  </header>
+
+  <!-- Hero Section  -->
+  <section class="hero" id="home">
+    <br><br><br><br>
+    <div class="hero-badge">World's First Agentic Commerce Stack</div>
+    <h1>
+      Open Source A1<br />
+      <span class="gradient-text">Commerce Stack</span>
+    </h1>
+    <p>
+      AE Network Is An Open-Source Platform That Enables A1 Agents TO Pay
+      Autonomously Via HTTP 402 And MCP Wallet.
+    </p>
+    <div class="hero-cta">
+      <button class="motion-btn"><span>Get Started</span></button>
+    </div>
+    <div class="glow-wave"></div>
+  </section>
+
+  <!-- Chat Interface -->
+  <section class="chat-section">
+    <div class="chat-container">
+      <textarea style="height: 60%;" class="chat-input" placeholder="Ask Any Things..."></textarea>
+      <br><br><br>
+      <div class="chat-tools">
+        <button class="tool-btn icon-btn"><i class="fas fa-plus"></i></button>
+        <button class="tool-btn icon-btn">
+          <i class="fas fa-random"></i>
+        </button>
+        <button class="tool-btn"><i class="fas fa-search"></i> Search</button>
+        <button class="tool-btn">
+          <i class="fas fa-image"></i> Create Image
+        </button>
+        <button class="tool-btn icon-btn" style="margin-left: auto">
+          <i class="fas fa-microphone"></i>
+        </button>
+        <button class="tool-btn icon-btn">
+          <i class="fas fa-arrow-up"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Is AE Network -->
+  <section class="section" id="about">
+    <h2 class="section-title">What is AE Network?</h2>
+    <p class="section-subtitle">
+      AE.Network Is A Developer-First Platform Allowing AI Agents To
+      Autonomously Pay For APIs And Services.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-globe"></i>
+        </div>
+        <h3>HTTP 402 Paywalls</h3>
+        <p>Add paywalls to your AI tools using standard HTTP 402</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-rocket"></i>
+        </div>
+        <h3>Agent Payments</h3>
+        <p>
+          Let agents send signed blockchain transactions via the MCP Wallet
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fab fa-bitcoin"></i>
+        </div>
+        <h3>Crypto Payments</h3>
+        <p>Accept payments in Solana, Ethereum, or USDC</p>
+      </div>
+
+      <div class="feature-card" >
+        <div class="feature-icon">
+          <i class="fas fa-certificate"></i>
+        </div>
+        <h3>NFT Access</h3>
+        <p>Offer NFT-based subscriptions</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-key"></i>
+        </div>
+        <h3>API Key-Free</h3>
+        <p>Reduce friction and remove authentication hassles</p>
+      </div>
+    
+    </div>
+  </section>
+
+  <!-- Stack Section -->
+  <section class="section">
+    <h2 class="section-title">What's Inside The AE Network Stack</h2>
+    <p class="section-subtitle">
+      AE Network Is A Developer-First Platform Allowing AI Agents To
+      Autonomously Pay For APIs And Services.
+    </p>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="feature-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <h3>HTTP 402 Paywalls</h3>
+        <p>Simple and familiar for developers.</p>
+      </div>
+      <div class="stack-card">
+        <div class="feature-icon">
+          <i class="fas fa-wallet"></i>
+        </div>
+        <h3>MCP Wallet</h3>
+        <p>Embedded in agents like Cursor, Claude, Windsurf.</p>
+      </div>
+      <div class="stack-card">
+        <div class="feature-icon">
+          <i class="fas fa-link"></i>
+        </div>
+        <h3>Blockchain Payments</h3>
+        <p>Accept stablecoins on Solana or Ethereum.</p>
+      </div>
+      <div class="stack-card">
+        <div class="feature-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <h3>NFT Subscriptions</h3>
+        <p>Issue monthly or time-based access NFTs.</p>
+      </div>
+      <div class="stack-card">
+        <div class="feature-icon">
+          <i class="fas fa-cogs"></i>
+        </div>
+        <h3>Developer-First Design</h3>
+        <p>NO SDK, no extra libraries. Just REST.</p>
+      </div>
+      <div class="stack-card">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Open Source & Audited</h3>
+        <p>Built in public, tested at top hackathons.</p>
+      </div>
+    </div>
+  </section>
+  <!--Designed for Developers-->
+  <section class="glass">
+    <div class="glass-card">
+      <h2>Designed for AI Developers</h2>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+          <p>Manual API keys</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+          <p>Subscription</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+          <p>Human Design</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+          <p>Agent Pay Fail</p>
+        </div>
+      </div>
+
+      <div class="sub-card">
+        <h3>AE network fixes this</h3>
+        <p>
+          We give developers a wallet + API system to start charging for AI
+          agent access in less than 60 seconds.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <br /><br />
+
+  <!-- Integrations -->
+  <section class="section1">
+    <div class="hero">
+      <div class="container">
+        <h1 class="hero-title" style="width: 100vh;margin-left: 0vh; white-space: nowrap;">Plug AE Network Into <br>Your Agent Stack</h1>
+        <p class="hero-sub">
+          Add Agent Monetization To Your Workflow Bots, SaaS Tools, GPT
+          Wrappers, And Agent Apps.
+        </p>
+        <div class="card">
+          <div class="logos-grid">
+            <img class="logo-img"
+              src="data:image/jpeg;base64,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"
+              alt="Cursor" />
+            <span class="logo-text">Cursor</span>
+          </div>
+          <div class="logos-grid">
+            <img class="logo-img"
+              src="data:image/png;base64,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"
+              alt="Claude" />
+            <span class="logo-text">Claude</span>
+          </div>
+          <div class="logos-grid">
+            <img class="logo-img"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACUCAMAAAAj+tKkAAAAY1BMVEUAAAD////j4+OwsLCKiophYWGWlpb8/Pzv7+/39/e6urpycnLm5ubc3NyPj48NDQ0fHx/V1dVYWFijo6PKysp8fHxPT0+cnJw5OTlpaWklJSXDw8MsLCwxMTFBQUEZGRlISEiEBt8uAAAEPklEQVR4nO2a65aiMAyACaKACorifZzh/Z9y0fECJGlTWvfs2ZPvp0MnnxSStDaKFEVRFEVRFEVRFEVRFEVRFEX5f1iVzZhhm12SJKevkUFvo3cr2bU7yNwDnOosBYC8mKzdB0dllbWDYSG7egZwcQxwrODNTHgjXmzyx8hELJju3CJk0MXxJibpY1wqF4Ts6BDhnEKfuYvf7jXMRRBqB78YhpTy0XsYJyh9HlpK5Af5Rjp4dRkrmEljfGVYECrpY3iCsYJQjAjxZiscvR0vCAfZ5RNSMJ3KRi89BHNZjIIUhPgqGt37Uo6CUIgyLn6Hf5HlGi9BWQxOUFa4/ARFMVjB7PvzgrEgBisomgBPQUlB4QUlyd5XEOxdg0Ewt0+At2C29xCE6ufjgvZJNgnaC4q/IMx8BME2yQEEU0vXYBZcnj8uCJU5hlnQNskhBGHiIwinzwuCcZJtgpmxaxgjuEAxClMMm6C5oPSuFAquhmsgcwyroHGF0rtQupbc4hiGruEleDmUhxp/ubagGNq25zXZfFbuxMvVGsUwLEN/BbNnuiyJJUplE4yF/feTbxyjZu/CXbB+J+TjBY/mVw/3P2+tFXFIgmOwD/BNsOruGf3gCQB2Au5+rnrtezLHMbii1QpmTe+T4xINjrl7dLv7zvev5ZqjGNz/ifEtIFai3CS32c+cyTmIGMxMtILoM2IpyuSBtlqP8osiYpLpghITIc54LcrsOY56Au9ccQKm9xpiajdxih8ROtmLdy0xG3wLyRgx2Uzggk7nAQDHFNgBP0jk80wLRhUanYcWXBP5jEjXGS24xxWFKig+gtEeF9YLNsyZfnGHBhNdw8ZLkNqaRA3HIuUaWjwBeTO8ZuInSMRABaVmO26qoBCXeAk2+EEaLEOnKb8kICZ5UFBujZ2XIBWjp3NGn3Qhkn0v19x7dz/BiOid5u8XZbM0Cq6Ibrtj+NszeQoeiRjFI/mvtjm+pz0WuKBA3Tz+c5WGEKT3yPPLrNy+UrFhWXqgRi8ns9nk9Qb5CjKb5F1M62b7kspbcM3skssEN8QkBxakOhO5IJXsQwtSnYlckOgaggtyP4XIBNfUT2WBBYnORC5ILRFDC1piWASpghJakCoocsHIOAFhBL9NMayCREUPLXhr+8YLUttRoQVNBcUuuMKtYXBBw4NkF4yavyDIFxSBoCHZBxPkJ1kiyCf7cIJsDJFgxE1AQEGuM5HtrnBdQxNOkIsh3F1hCorsbIMQsqBIT/HQXUMx5rQcy5UKId4hxT/AgPjwixSqoMhPyhEFRXSwwQX8ILkcQ8MFRX5ETMpwFbR0ORR6HU6A60lKAet+C180TqOn/RdlHvQNeRp2n6Ta9VDtsZvtnQ+TCvmax7eUnS9r64kLgsXjOG48sfwY78PxlCTJYuwLuL8faA6aoBVFURRFURRFURRFURRFURRF+ef4A+buJ7HN9T1AAAAAAElFTkSuQmCC"
+              alt="Windsurf" />
+            <span class="logo-text">Windsurf</span>
+          </div>
+          <div class="logos-grid">
+            <img class="logo-img"
+              src="data:image/jpeg;base64,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"
+              alt="Lovable" />
+            <span class="logo-text">Lovable</span>
+          </div>
+          <div class="logos-grid" id="update-margin1">
+            <img class="logo-img"
+              src="data:image/png;base64,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"
+              alt="Supabase" />
+            <span class="logo-text">Supabase</span>
+          </div>
+          <div class="logos-grid"  id="update-margin2" >
+            <img class="logo-img"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAL0AAACUCAMAAADxqtj8AAAAZlBMVEUAAAD////z8/P8/PwFBQUJCQn5+fnHx8f29vYRERGKiorCwsINDQ2Xl5dWVlbp6eltbW0uLi7j4+M1NTVPT09lZWW8vLwmJiampqa1tbUdHR1HR0d6enpfX1+enp6BgYHY2NhAQEBFp22PAAADYklEQVR4nO2ajXKqMBCFd0kIEVEQRa1ai+//kncjVSvKFbDTTWb264z9mel4PG4OJxEAQRAEQRAEQRAEQRAEQRAEQRAEQXiJvj4EiIZMZ1oHKl/rGOJQ1TvZH823ACHnD3gg97mFjELDpsZ6E+yynVllZ9wixjIvVaTKObeMEWgKmy0qo3BL0RPa8JDgKlIKlYoqt36DIo5hkqBRShlMJu7XkCC3CzRn9QaLAFOzpqlBdA81t5ShaEjRYIPCFMKaHFiW6qLeYH7iljOQD3WeG2xm54NbzgCol1U5XsS70cmrcMoaFZwp3jPdBDP6lJa2pd4WwaiHXYJtkh23qD64fvMjLW+jn4awzdJxrCdKtSfHoJlACOoz2FJHaHtvcQuZ94WBCs4+QqXa6qlr7v2vO6SvnZbX1AzhbOcQdaiPDv6rXzym5TU1F9zi/ovLlNS0Z/62clOvT3doC7UsH7L+qh7Lpce5407+Zo95c4FidOZx7OgMAK3t8t7QThEg41bZBc30lOajc+7pXZn6e76g4bPL96v/n/6m5i5p95sH9R53zdR2LtnL8LjU9BBKy1ONr7y3WJ98PJuKXVp2Xqmu5jep6dvsU1ruS9UdON/iaXbKvYebxJhqve3hvSv63qnXsDp7+wr37qw8TM2kh/ZGf8It9ZECO+vZPdYdKvtG3l3P2t5jzi32DhrjbT/p3y9g61PPz2BVDhCPWK486poajoPEIx698Z467yofqD4/pyb/K9DEpG9a3kgmXnwO6raDFXZuqJ5Dm8TKi7rjLCxf17N7lFGlO/LkFu+mPu0b9T/ku0NlH7yHxdAl25AvPFi1AMehxn/bf/TB/CoftmJv5le8wt2K3azHaaeMXW+ANTbjDAqrxnmvTFTwbnFjvUvQvNqKP8dS0d9xnk3Rc3/RhWqc94b+74vzXJOeueujhn5EnF1Hw+wt8dQ1OTN/Hg2sCPfQwmW65067r/XIvLnKxylTUab1VuTvOE8YlRcsXZOecrdGM7jY31tv3d0jHIUhc7cjvDs5dK1IYfL34gGWNSr79uhgvWTQ7tLyTemN/e5Q+e/lL6PBe5Ln6i2H+euh28EO9e6juD9nHv0eId4mzov+LVjEP/vxzT8KgiAIgiAIgiAIgiAIgiAIgiAIgiAIYfAPJ8keGZpt7o8AAAAASUVORK5CYII="
+              alt="Vercel" />
+            <span class="logo-text">Vercel</span>
+          </div>
+          <div class="logos-grid"  id="update-margin3">
+            <img class="logo-img"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAe1BMVEUWFRP09/AAAADy+O4YFBUYFBP09vGkpKH///////z7/fj3+vOgoZ309+6sr6p7fXkZExfv8OsREA5aW1i9vrpWVlTk5uELCQcVFhHOz8ogIB81NjMGBwB1dXK3uLTDxMDc3dhnaGU8PDssLSqFhIORko5NTEsnJiRDQ0KaRaG4AAAFlklEQVR4nO2aaZO6OBDGSYQgCahBDlHkUDy+/yfc7gQRyjn+u7URazfPm6kpZsqfnU5ftONYWVlZWVlZWVlZWVlZWVlZWVlZWc0vCorhpzc3SC/X9aiTdl26p46nNDcRCJjSgi0D3qy1tT5CtJWcCEKEkN2B5nPjaNFGkIigRJD5B1rODQSi24BECy3GuFyllM7N5FBfLBYkUmJgLs6S7ezORX00ERmJs6Ldz4v1CiUZZ82Rzunzr1AgRri8nObz+S+hCInA5y+H9/p8PLiMcvQJVH8TIXCx91xFF7KKE1O6v2G6y2OE4hARJkZS0j4vkyvdmYbabDZefvYl57IOj5DvKECRKdSYbyGCzritNq6b7wvOGcRJzmRRh9eQw2d/C7VgMjV9DaEIKGuu7pdKLIIHQSTYq6M/oAjjhWlTuZB/WZ/qereO4HN/gCJM7o0HUnrh/f0a1FSNDLj4DoptjXsVOvb0qvEVPVzbsGYB51wdJfIp3Iih870diiioOMYIcVv7dQYXQAxQBKHebykNpR/lUB2c0vWqkZwJRaaYxKxQDkb6HG2WdlWdEXWY8x1f/8x1VcTHkA82267hAgg+8/FpKLf/RbnZub0YshR8+7iERAfyXJ1WdPGLWiwASvdW3g6Ff+653kAmjPiU58Y03rbX225XwpeHtAJU0QTKHXV83sReTm7G0b08DjPGpMyypkhWzSNKjqDyWONAvt640/8uuRGo+FYvCUZEKJAE3CgCP+DK91Ak4sn9rioZrTzPn9WWQ+9LuTOQZugKcpsukFQvJZqiyaRUhYKKlAKM2DRFkYTdsd1e76fzPn4g7osgMWCo/MTE0NmheEh3Z0gsx/Xl4idFBkzBshekQAmIRZ0kFSJ2TSBTA6U6PYoh16oaE6AgRuYPW/jBKj8f7u36Eq6SJsuUEcGEAaRCEQRya6L0pOtR/sd0BlDjxwBF+0CuJkL7Q3o8IuEqKWQTnujuDVDkC6jn+AdiWV4OPu/m0P2ZqNEBSvxmqdeZlIfRYWNsVvW3oXQGVHIf2fBDoJw+5bwH6mefepP+mU9ZKHt8/10od6RRoJo3JLwwvQ3qz48vHs3W/n2oX6uEoQSGfPxMx+qxmTnQr1DL1VAKl+XukOrqDwsXUGWknIIij78UeUOJFytL7bHEu+gSL5O6wsMaT03Wjiao4puclMMA5TyK4aqAcp3xRzG8xOmeKoYrVQxf79uas9ZEL6o6vWfjQIiueHGGIfQcY9Q2pJO2AQyaBIYmedWyB+DQYnHstrC3eozveDVA6AZr8o1OAXEM3EEvz9eFbkXryu9qMZnZQcv1Y0TPObkaaGc816H0dt71l32YJTxc/9m2jyP6AGVoPqWmOygEpL54hfKmUJ7bzxWwyTHTtk/10yho/GJb2XV37ULG0o+Awih2To9+gRNQxq5zjxdVVL0f/brBGKpnIDNaCifE5fna+rV8TIjJrNNh7UBtWDUS7QNxbDSyfpejRyMmgHJObVdlerb/jF+P4f47ju/C2fgdSBSJpsmQh7wqUsYyDeU55VZOPj6K8IZFXxD1UESaNhTceEix6MFq3CigQMCdku+hIDXWpqE2rhvTBJ0Z73tT+C3WENE3TOBZTGQn0y8hcbyzc7uGyWa1bg9Uj7C/hYJbII2UUxOpPmWoVLAkwRfbU6jHigm+b89Ch86w6vW6lzC8j+BZd5pnveSbZQnCebGebbXk67USLtQSjvGVhD+Gwi2q5AoeN9923guU4LK6l6UXz7g0CCEh6pe6wLmJCJpQbeZ5zoyLjOWVP9ffOM8u509YFqQNdBL9wRVdPPfmmxa9N6rCwq035zOQcPn0luDGW5XihfuEfVj1gjmPD9vtIS53H7OmqxTr2P0xPFZWVlZWVlZWVlZWVlZWVlZWVlb/O/0FQ8Zld6Ai7lEAAAAASUVORK5CYII="
+              alt="Composio" />
+            <span class="logo-text">Composio</span>
+          </div>
+
+        </div>
+      </div>
+      <br><br>
+      <br>
+      <div id="code-bl-section">
+        <div class="code-block-section">
+        <div class="code-header">Code Example</div>
+        <pre class="code">
+            Solana Payment Verification
+            // Make A POST Request To The SxT API
+            const response = await
+            Functions.MakeHttpRequest({
+              Url: "https://SxT-API-URL",
+              Method: "POST",
+              Timeout: 9000,
+              Headers: {
+                "Authorization": `Bearer ${Secrets.AccessToken2}`,
+                "Content-Type": "application/json"
+              },
+              Data: { "ResourceId": ResourceId, "SqlText": SqlText }
+            })
+        </pre>
+      </div>
+
+      <div class="buttons-row">
+        <button class="btn-primary">Install MCP Wallet</button>
+        <button class="btn-secondary">Read The Docs</button>
+      </div>
+      </div>
+       
+    </div>
+    </div>
+  </section>
+
+  <section>
+      <div class="container">
+        <h1 style="font-size:5vh;font-family:700">Frequently Asked Questions</h1>
+        <p class="subtitle">AI Agents Will Execute Tasks, Scale Tools, Carry<br>Wrappers, And Agent Apps.</p>
+        <br><br>
+         <div class="faq-container">
+    
+    <div class="faq-item">
+      
+      <div class="faq-answer">
+        <p>AI agents are increasingly automating repetitive digital tasks, allowing humans to focus on creative and strategic work.</p>
+      </div>
+      <button class="faq-question">
+        AI agents will soon replace humans in routine digital commerce
+        <span class="arrow">▼</span>
+      </button>
+    </div>
+
+    <div class="faq-item">
+     
+      <div class="faq-answer">
+        <p>Since most models are trained on similar data and techniques, differentiation often comes from deployment, efficiency, and ecosystem integration.</p>
+      </div>
+       <button class="faq-question">
+        Large Language Models (LLMs) face no sustainable competitive moat
+        <span class="arrow">▼</span>
+      </button>
+    </div>
+
+    <div class="faq-item">
+      
+      <div class="faq-answer">
+        <p>AI systems depend on consistent cloud access, data pipelines, and power supply to maintain performance and learning cycles.</p>
+      </div>
+      <button class="faq-question">
+        The evolution of AI tools will require uninterrupted infrastructure
+        <span class="arrow">▼</span>
+      </button>
+    </div>
+
+    <div class="faq-item">
+      
+      <div class="faq-answer">
+        <p class="faq-text">Developers are already integrating AI frameworks into their workflows to accelerate automation, deployment, and scaling.</p>
+      </div>
+      <button class="faq-question">
+        Developers will be the first adopters of agentic infrastructure
+        <span class="arrow">▼</span>
+      </button>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-answer">
+        <p>As AI agents curate information, businesses will optimize their data for AI parsing and contextual understanding, not just search ranking.</p>
+      </div>
+      <button class="faq-question">
+        SEO will shift from search engines to optimization for AI agents
+        <span class="arrow">▼</span>
+      </button>
+    </div>
+
+  </div>
+      </div>
+    </section>
+    
+
+    <section>
+       <div class="newsletter-card">
+            <div class="logo-circle">
+                <img class="logos" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAdVBMVEUAAAD////8/PyxsbEEBATe3t4yMjI3Nzf5+fldXV1PT0/l5eXr6+vy8vK0tLT39/fHx8fU1NSkpKSRkZEZGRmYmJggICBVVVV9fX1DQ0MTExO8vLxxcXGKiopjY2PNzc1tbW0qKiqCgoI9PT0WFhapqalGRkZMEJGdAAAEEklEQVR4nO3aa3uaMBTAcYhgqYh3rfNStc5+/4+4gEoOkOjWbUr6/H8vti6EPTk9ITcIAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgih6dgv+Dx1Wb5Am6fqt+Plbmodnk+8a4vQSoMpD/I66OrSzJPzx7MZ8zZ2ed+2jeRI7j2nRv7Ra3K0SlzkMw/gBTfqHeqd0qFs9HM+7t6r1Q6P/qLb9rXxi28ei5aOju7OOfcxhFKzW+XN1abr+W82dleciQk8GU53Bg+x6Z2vXmmWRXH8PKrzZndtk1QxQ91RX7c052fqPD29m/LgZn7oxn2/OWVRLTwKMxAxX1XPesh3Fo+nqka38Kz+HjgjHd270I4NB4ExhGL7fus2X+KIgyszor8oZo7D7DlvASG8VVCVx8l+f3mTqFjlTZNvXiQlRWWeMPObVcrpcBJ701I/66DmVBS/NG3RUneJax5NzjFTEMyqanImOurbdMsrXM/qBvTfWtsNGZuytKBIPplKHZk/clvUnPnRTs5wpczIbisHm1HzYTNazhzf3z73LFO4vhRNRlizqER7EVQ9OMcaiuem18JCI0sY26kVcfH1sa7+gJ1O4LIsHYqzJ6stPvyLcidaKE4mjWdqocFq7x6sIj3IBsxUX1qZY1c9iZIRvj2ztV8hAKuPiD3vvLfgUYVcus+eVMXNkQq8fqPkUYUe0NZtVLlWGoE0leI+ew0Oi3Kdm8mAj9jXC2sRetZdJrOyEu95EOMtMfJYXEKlIcGWJ7U+Ec7kRbO6SlvKyPJPyJMIo3/ne3iRVt1WGJxHKPVBoX0GbCiqvUA423kTYFycy9uPtTIQokuxLhHu5YLNN3JF4UJVKzBsKXyKs7nwt5y1RsMoSU8cMtp5E2DV9VOl22g4jIjFhKjFhehLh9ndecy7kTrhc9HgSoVySbhx1IlFLqeznpVjuO5zvbp5P7JtSV50oOMi+fN0Jy/NUy3FqW4jN/cj2FEZ5YaR/ESbC4aG4MktM/04e3Oo/IXI4dCUikl8H6R+y/Kl7z8TLm3GLz0tPYqRJ4qbx/FBMIWYnnOvHcqnX7g8VKhO+1XCf1+vVi5V8Fff55Chumd0LUIdSTAU7d4Vw9+wobho5W14GEOeP4lvoyLZq+ynNZ/Vtry2H5wjW9gj15cGzY7hjcPdJvCwFUkdF5zzaFqvU2u5mhC+ZNd1Zt8VTxVnX3vIrPbFf9sXHfj2L+r6+Dx98HS2fQokoLkOlTtSqOaDuZq3PYKFzHigtmVRFNywt+6Zc6y/d/2fLfA5c30OFcfXsZjkuV6hjf+Irdvav29OgUzEYdAaTV/l2u6i42E9P6850X2yFveiiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0xS89iiEf8WZwwQAAAABJRU5ErkJggg=="></img>
+            </div>
+            <h2>Join Our Newsletter</h2>
+            <p>Add Agent Information To Your Workflow: Get Latest Tools, GPT<br>News and Agent Apps.</p>
+            <form class="email-form">
+                <input type="email" class="email-input" placeholder="Enter your email">
+                <button type="submit" class="submit-sub">Subscribe</button>
+            </form>
+       
+
+        <footer class="footer">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                   <img class="logos" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAdVBMVEUAAAD////8/PyxsbEEBATe3t4yMjI3Nzf5+fldXV1PT0/l5eXr6+vy8vK0tLT39/fHx8fU1NSkpKSRkZEZGRmYmJggICBVVVV9fX1DQ0MTExO8vLxxcXGKiopjY2PNzc1tbW0qKiqCgoI9PT0WFhapqalGRkZMEJGdAAAEEklEQVR4nO3aa3uaMBTAcYhgqYh3rfNStc5+/4+4gEoOkOjWbUr6/H8vti6EPTk9ITcIAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgih6dgv+Dx1Wb5Am6fqt+Plbmodnk+8a4vQSoMpD/I66OrSzJPzx7MZ8zZ2ed+2jeRI7j2nRv7Ra3K0SlzkMw/gBTfqHeqd0qFs9HM+7t6r1Q6P/qLb9rXxi28ei5aOju7OOfcxhFKzW+XN1abr+W82dleciQk8GU53Bg+x6Z2vXmmWRXH8PKrzZndtk1QxQ91RX7c052fqPD29m/LgZn7oxn2/OWVRLTwKMxAxX1XPesh3Fo+nqka38Kz+HjgjHd270I4NB4ExhGL7fus2X+KIgyszor8oZo7D7DlvASG8VVCVx8l+f3mTqFjlTZNvXiQlRWWeMPObVcrpcBJ701I/66DmVBS/NG3RUneJax5NzjFTEMyqanImOurbdMsrXM/qBvTfWtsNGZuytKBIPplKHZk/clvUnPnRTs5wpczIbisHm1HzYTNazhzf3z73LFO4vhRNRlizqER7EVQ9OMcaiuem18JCI0sY26kVcfH1sa7+gJ1O4LIsHYqzJ6stPvyLcidaKE4mjWdqocFq7x6sIj3IBsxUX1qZY1c9iZIRvj2ztV8hAKuPiD3vvLfgUYVcus+eVMXNkQq8fqPkUYUe0NZtVLlWGoE0leI+ew0Oi3Kdm8mAj9jXC2sRetZdJrOyEu95EOMtMfJYXEKlIcGWJ7U+Ec7kRbO6SlvKyPJPyJMIo3/ne3iRVt1WGJxHKPVBoX0GbCiqvUA423kTYFycy9uPtTIQokuxLhHu5YLNN3JF4UJVKzBsKXyKs7nwt5y1RsMoSU8cMtp5E2DV9VOl22g4jIjFhKjFhehLh9ndecy7kTrhc9HgSoVySbhx1IlFLqeznpVjuO5zvbp5P7JtSV50oOMi+fN0Jy/NUy3FqW4jN/cj2FEZ5YaR/ESbC4aG4MktM/04e3Oo/IXI4dCUikl8H6R+y/Kl7z8TLm3GLz0tPYqRJ4qbx/FBMIWYnnOvHcqnX7g8VKhO+1XCf1+vVi5V8Fff55Chumd0LUIdSTAU7d4Vw9+wobho5W14GEOeP4lvoyLZq+ynNZ/Vtry2H5wjW9gj15cGzY7hjcPdJvCwFUkdF5zzaFqvU2u5mhC+ZNd1Zt8VTxVnX3vIrPbFf9sXHfj2L+r6+Dx98HS2fQokoLkOlTtSqOaDuZq3PYKFzHigtmVRFNywt+6Zc6y/d/2fLfA5c30OFcfXsZjkuV6hjf+Irdvav29OgUzEYdAaTV/l2u6i42E9P6850X2yFveiiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0xS89iiEf8WZwwQAAAABJRU5ErkJggg=="/>
+                    <span>AE</span>
+                </div>
+                <p class="footer-tagline">Blockchain For ZK-Proven Data.</p>
+                <div class="social-icons">
+                    <div class="social-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                        </svg>
+                    </div>
+                    <div class="social-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="white">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26l8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </div>
+                    <div class="social-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037c-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85c3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065c0-1.138.92-2.063 2.063-2.063c1.14 0 2.064.925 2.064 2.063c0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </div>
+                    <div class="social-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416c-.546-1.387-1.333-1.756-1.333-1.756c-1.089-.745.083-.729.083-.729c1.205.084 1.839 1.237 1.839 1.237c1.07 1.834 2.807 1.304 3.492.997c.107-.775.418-1.305.762-1.604c-2.665-.305-5.467-1.334-5.467-5.931c0-1.311.469-2.381 1.236-3.221c-.124-.303-.535-1.524.117-3.176c0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404c2.291-1.552 3.297-1.23 3.297-1.23c.653 1.653.242 2.874.118 3.176c.77.84 1.235 1.911 1.235 3.221c0 4.609-2.807 5.624-5.479 5.921c.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Site</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Platform</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Privacy & Policy</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Docs</h3>
+                    <ul>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Brandkit</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+        <div class="footer-bottom">
+          <span>  &copy; 2025 AE. All rights reserved.</span>
+            <span>Privacy Policy</span>
+            <span>Terms & Condition</span>
+           
+        </div>
+    </div>
+     </div>
+    </section>
+       
+    <script>
+  window.addEventListener("scroll", function () {
+    const header = document.getElementById("header");
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+
+    <script>
+        // Add click functionality to FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const icon = this.querySelector('.faq-icon');
+                if (icon.textContent === '▼') {
+                    icon.textContent = '▲';
+                } else {
+                    icon.textContent = '▼';
+                }
+            });
+        });
+
+        // Handle form submission
+        document.querySelector('.email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.email-input').value;
+            if (email) {
+                alert('Thank you for subscribing!');
+                this.reset();
+            }
+        });
+    </script>
+  <script>
+  const faqItem = document.querySelector(".faq-item");
+  const faqText = document.querySelector(".faq-text");
+  const arrow = document.querySelector(".arrow");
+
+  let isOpen = false;
+
+  faqItem.addEventListener("click", () => {
+    if (!isOpen) {
+      faqText.textContent = "AI agents will soon replace humans in routine digital commerce";
+      arrow.textContent = "▲";
+    } else {
+      faqText.textContent = "AI agents are increasingly automating repetitive digital tasks, allowing humans to focus on creative and strategic work.";
+      arrow.textContent = "▼";
+    }
+    isOpen = !isOpen;
+  });
+</script>
+
+</body>
+
+</html>
