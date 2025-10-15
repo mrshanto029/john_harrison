@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AE Network - Agentic Commerce Stack</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-purple: #8b5cf6;
+        --primary-pink: #ec4899;
+        --dark-bg: #0f0a1e;
+        --darker-bg: #1a0b2e;
+        --card-bg: rgba(30, 20, 50, 0.6);
+        --text-light: #e5e7eb;
+        --text-gray: #9ca3af;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: var(--dark-bg);
+        color: var(--text-light);
+        overflow-x: hidden;
+      }
+
+      /* Animated Background */
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .bg-gradient {
+        position: absolute;
+        width: 800px;
+        height: 800px;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.3;
+        animation: float 20s ease-in-out infinite;
+      }
+
+      .bg-gradient-1 {
+        background: radial-gradient(circle, var(--primary-purple), transparent);
+        top: -200px;
+        left: -200px;
+      }
+
+      .bg-gradient-2 {
+        background: radial-gradient(circle, var(--primary-pink), transparent);
+        bottom: -300px;
+        right: -300px;
+        animation-delay: -10s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+      }
+
+      /* Stars */
+      .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .section {
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .feature-card {
+        background: #1a0d2e; /* dark purple background */
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-8px);
+      }
+
+      .feature-icon {
+        font-size: 32px;
+        color: #a855f7; /* purple icon */
+        margin-bottom: 10px;
+      }
+
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle 3s ease-in-out infinite;
+      }
+
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      /* Header */
+      header {
+        top: 0;
+        background: rgba(15, 10, 30, 0.8);
+        backdrop-filter: blur(5px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        transition: all 0.3s ease;
+        position: fixed;            
+        top: 20px;                    
+        left: 50%;
+        transform: translateX(-50%);  
+        width: 80%;                   
+        border-radius: 20px;         
+        padding: 15px 0;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+
+      header.scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      nav {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-purple);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-light);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-purple);
+      }
+
+      .cta-btn {
+        background: linear-gradient(
+          135deg,
+          var(--primary-purple),
+          var(--primary-pink)
+        );
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+      }
+
+      .menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Hero Section */
+      .hero {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 8rem 2rem;
+        text-align: center;
+        position: relative;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        padding: 0.75rem 2rem;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 50px;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+        backdrop-filter: blur(10px);
+        background: rgba(139, 92, 246, 0.1);
+        animation: fadeInDown 1s ease;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        animation: fadeInUp 1s ease 0.2s backwards;
+      }
+
+      .hero h1 .gradient-text {
+        background: linear-gradient(
+          135deg,
+          var(--primary-purple),
+          var(--primary-pink)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero p {
+        font-size: 1.25rem;
+        color: var(--text-gray);
+        max-width: 800px;
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+        animation: fadeInUp 1s ease 0.4s backwards;
+      }
+
+      .hero-cta {
+        animation: fadeInUp 1s ease 0.6s backwards;
+      }
+
+      .hero-cta .cta-btn {
+        font-size: 1.1rem;
+        padding: 1rem 2.5rem;
+      }
+
+      /* Glow Effect */
+      .glow-wave {
+        position: absolute;
+        bottom: -100px;
+        left: 0;
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--primary-purple),
+          var(--primary-pink),
+          transparent
+        );
+        filter: blur(60px);
+        opacity: 0.6;
+        animation: wave 8s ease-in-out infinite;
+      }
+
+      @keyframes wave {
+        0%,
+        100% {
+          transform: translateX(-50%) scaleY(1);
+        }
+        50% {
+          transform: translateX(50%) scaleY(1.5);
+        }
+      }
+
+      /* Chat Interface */
+      .chat-section {
+        max-width: 1200px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+        animation: fadeInUp 1s ease 0.8s backwards;
+      }
+
+      .chat-container {
+        background: var(--card-bg);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 24px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+      }
+
+      .chat-input {
+        width: 100%;
+        background: rgba(30, 20, 50, 0.8);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 16px;
+        padding: 1.5rem;
+        color: white;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        resize: none;
+        height: 150px;
+      }
+
+      .chat-tools {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .tool-btn {
+        background: rgba(139, 92, 246, 0.1);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .tool-btn:hover {
+        background: rgba(139, 92, 246, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .icon-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+      }
+
+      /* Features Section */
+      .section {
+        max-width: 1400px;
+        margin: 8rem auto;
+        padding: 0 2rem;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: var(--text-gray);
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: -2rem auto 4rem;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 50px;
+      }
+
+      .feature-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .feature-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary-purple);
+        box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-purple),
+          var(--primary-pink)
+        );
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-card p {
+        color: var(--text-gray);
+        line-height: 1.6;
+      }
+
+      /* Stack Grid */
+      .stack-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .stack-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 20px;
+        padding: 2.5rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .stack-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-purple);
+      }
+
+      /* Problem Solution Section */
+      .problem-solution {
+        background: linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.1),
+          rgba(236, 72, 153, 0.1)
+        );
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 30px;
+        padding: 4rem 3rem;
+        backdrop-filter: blur(10px);
+        margin: 4rem auto;
+      }
+
+      .problem-items {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 3rem;
+      }
+
+      .problem-item {
+        background: rgba(30, 20, 50, 0.6);
+        padding: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .solution-box {
+        background: linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.2),
+          rgba(236, 72, 153, 0.2)
+        );
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 20px;
+        padding: 3rem;
+        text-align: center;
+      }
+
+      .solution-box h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Integration Section */
+      .integration-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .integration-card {
+        background: var(--card-bg);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 20px;
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 120px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .integration-card:hover {
+        transform: scale(1.05);
+        border-color: var(--primary-purple);
+      }
+
+      /* Code Block */
+      .code-section {
+        background: var(--card-bg);
+        border: 2px solid rgba(59, 130, 246, 0.3);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        margin: 4rem auto;
+      }
+
+      .code-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .copy-btn {
+        background: rgba(139, 92, 246, 0.2);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .code-block {
+        background: rgba(15, 10, 30, 0.8);
+        border-radius: 12px;
+        padding: 1.5rem;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .code-block .keyword {
+        color: #c678dd;
+      }
+      .code-block .function {
+        color: #61afef;
+      }
+      .code-block .string {
+        color: #98c379;
+      }
+      .code-block .number {
+        color: #d19a66;
+      }
+      .code-block .comment {
+        color: #5c6370;
+        font-style: italic;
+      }
+
+      /* FAQ Section */
+      .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        background: var(--card-bg);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        border-radius: 16px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .faq-item.active {
+        border-color: var(--primary-purple);
+      }
+
+      .faq-question {
+        padding: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      .faq-answer {
+        padding: 0 1.5rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        color: var(--text-gray);
+      }
+
+      .faq-item.active .faq-answer {
+        padding: 0 1.5rem 1.5rem;
+        max-height: 200px;
+      }
+
+      /* Newsletter */
+      .newsletter {
+        background: linear-gradient(
+          135deg,
+          rgba(139, 92, 246, 0.15),
+          rgba(236, 72, 153, 0.15)
+        );
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 30px;
+        padding: 4rem 3rem;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .newsletter-form {
+        display: flex;
+        max-width: 500px;
+        margin: 2rem auto;
+        gap: 1rem;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 1rem;
+        border-radius: 12px;
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        background: rgba(30, 20, 50, 0.6);
+        color: white;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--darker-bg);
+        border-top: 1px solid rgba(139, 92, 246, 0.1);
+        padding: 3rem 2rem 2rem;
+        margin-top: 8rem;
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+      }
+
+      .footer-section h4 {
+        margin-bottom: 1rem;
+        color: var(--primary-purple);
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section a {
+        color: var(--text-gray);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-section a:hover {
+        color: var(--primary-purple);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        width: 40px;
+        height: 40px;
+        background: rgba(139, 92, 246, 0.1);
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }
+
+      .social-links a:hover {
+        background: var(--primary-purple);
+        transform: translateY(-2px);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(139, 92, 246, 0.1);
+        color: var(--text-gray);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .feature-grid,
+        .stack-grid,
+        .integration-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+    </style>
+  </head>
+  <body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+      <div class="bg-gradient bg-gradient-1"></div>
+      <div class="bg-gradient bg-gradient-2"></div>
+    </div>
+
+    <div class="stars" id="stars"></div>
+
+    <!-- Header -->
+    <header id="header">
+      <nav>
+        <div class="logo">
+          <i class="fas fa-atom"></i>
+          <span><a href="#home">AE</a></span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#teams">Teams</a></li>
+        </ul>
+        <button class="cta-btn">Call Me</button>
+        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+      </nav>
+    </header>
+
+     <!-- Hero Section  -->
+    <section class="hero" id="home">
+      <div class="hero-badge">World's First Agentic Commerce Stack</div>
+      <h1>
+        Open Source A1<br />
+        <span class="gradient-text">Commerce Stack</span>
+      </h1>
+      <p>
+        AE Network Is An Open-Source Platform That Enables A1 Agents TO Pay
+        Autonomously Via HTTP 402 And MCP Wallet.
+      </p>
+      <div class="hero-cta">
+        <button class="cta-btn">Get Started</button>
+      </div>
+      <div class="glow-wave"></div>
+    </section> 
+
+   <!-- Chat Interface -->
+    <section class="chat-section">
+      <div class="chat-container">
+        <textarea class="chat-input" placeholder="Ask Any Things..."></textarea>
+        <div class="chat-tools">
+          <button class="tool-btn icon-btn">
+            <i class="fas fa-plus"></i>
+          </button>
+          <button class="tool-btn icon-btn">
+            <i class="fas fa-random"></i>
+          </button>
+          <button class="tool-btn">
+            <i class="fas fa-search"></i>
+            Search
+          </button>
+          <button class="tool-btn">
+            <i class="fas fa-image"></i>
+            Create Image
+          </button>
+          <button class="tool-btn icon-btn" style="margin-left: auto">
+            <i class="fas fa-microphone"></i>
+          </button>
+          <button class="tool-btn icon-btn">
+            <i class="fas fa-arrow-up"></i>
+          </button>
+        </div>
+      </div>
+    </section> 
+
+    <!-- What Is AE Network -->
+    <section class="section" id="about">
+      <h2 class="section-title">What is AE Network?</h2>
+      <p class="section-subtitle">
+        AE.Network Is A Developer-First Platform Allowing AI Agents To
+        Autonomously Pay For APIs And Services.
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-globe"></i>
+          </div>
+          <h3>HTTP 402 Paywalls</h3>
+          <p>Add paywalls to your AI tools using standard HTTP 402</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-rocket"></i>
+          </div>
+          <h3>Agent Payments</h3>
+          <p>
+            Let agents send signed blockchain transactions via the MCP Wallet
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fab fa-bitcoin"></i>
+          </div>
+          <h3>Crypto Payments</h3>
+          <p>Accept payments in Solana, Ethereum, or USDC</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3>NFT Access</h3>
+          <p>Offer NFT-based subscriptions</p>
+        </div>
+
+        <!-- <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <h3>API Key-Free</h3>
+          <p>Reduce friction and remove authentication hassles</p>
+        </div> -->
+      </div>
+    </section> 
+
+    <!-- Stack Section
+    <section class="section">
+      <h2 class="section-title">What's Inside The AE Network Stack</h2>
+      <p class="section-subtitle">
+        AE Network Is A Developer-First Platform Allowing AI Agents To
+        Autonomously Pay For APIs And Services.
+      </p>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="feature-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>HTTP 402 Paywalls</h3>
+          <p>Simple and familiar for developers.</p>
+        </div>
+        <div class="stack-card">
+          <div class="feature-icon">
+            <i class="fas fa-wallet"></i>
+          </div>
+          <h3>MCP Wallet</h3>
+          <p>Embedded in agents like Cursor, Claude, Windsurf.</p>
+        </div>
+        <div class="stack-card">
+          <div class="feature-icon">
+            <i class="fas fa-link"></i>
+          </div>
+          <h3>Blockchain Payments</h3>
+          <p>Accept stablecoins on Solana or Ethereum.</p>
+        </div>
+        <div class="stack-card">
+          <div class="feature-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <h3>NFT Subscriptions</h3>
+          <p>Issue monthly or time-based access NFTs.</p>
+        </div>
+        <div class="stack-card">
+          <div class="feature-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <h3>Developer-First Design</h3>
+          <p>NO SDK, no extra libraries. Just REST.</p>
+        </div>
+        <div class="stack-card">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Open Source & Audited</h3>
+          <p>Built in public, tested at top hackathons.</p>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Problem Solution
+    <section class="section">
+      <div class="problem-solution">
+        <h2 class="section-title">Designed for AI Developers</h2>
+        <div class="problem-items">
+          <div class="problem-item">
+            <i class="fas fa-file-alt"></i>
+            <span>Manual API keys</span>
+          </div>
+          <div class="problem-item">
+            <i class="fas fa-file-invoice"></i>
+            <span>Subscription</span>
+          </div>
+          <div class="problem-item">
+            <i class="fas fa-user"></i>
+            <span>Human Human</span>
+          </div>
+          <div class="problem-item">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Agent Pay Fail</span>
+          </div>
+        </div>
+        <div class="solution-box">
+          <h3>AE network fixes this</h3>
+          <p>
+            We give developers a wallet + API system to start charging for AI
+            agent access in less than 60 seconds.
+          </p>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Integrations
+    <section class="section">
+      <h2 class="section-title">Plug AE Network Into Your Agent Stack</h2>
+      <p class="section-subtitle">
+        Add Agent Monetization To Your Workflow Bots, SaaS Tools, GPT Wrappers,
+        And Agent Apps.
+      </p>
+      <div class="integration-grid">
+        <div class="integration-card">
+          <i class="fas fa-terminal"></i> CURSOR
+        </div>
+        <div class="integration-card"><i class="fas fa-brain"></i> Claude</div>
+        <div class="integration-card"><i class="fas fa-wind"></i> Windsurf</div>
+        <div class="integration-card"><i class="fas fa-heart"></i> Lovable</div>
+        <div class="integration-card">
+          <i class="fas fa-bolt"></i>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
